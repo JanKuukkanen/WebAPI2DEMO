@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AutokauppaX kuvineen</title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
+</head>
+<body>
+    <div>
+        <h2 class="w3-container w3-teal">AutokauppaX tarjoaa tänään</h2>
+        <input type="button" class="w3-btn" value="Hae autot" onclick="haeautot()" />
+        <ul id="autot" class="w3-ul" style="width:50%;"></ul>
+        <div>
+            <!-- Skriptit -->
+            <script src="http://ajax.aspnetcdn.com/ajax/JQuery/jquery-2.0.3.min.js"></script>
+            <script>
+                function haeautot() {
+                    var uri = 'api/cars';
+                    $.getJSON(uri, function (data) {
+                        for (m in data) {
+                            document.getElementById("autot").innerHTML
+                            += "<li><h3>" + data[m].Name + "</h3>" + data[m].Model + " Tarjoushinta:" + data[m].Price
+                            + " € <img src='" + data[m].Url + "' alt='kuva' style='width:45%;'/>" + "</li>";
+                        }
+                    })
+                }
+            </script>
+        </div>
+    </div>
+</body>
+</html>

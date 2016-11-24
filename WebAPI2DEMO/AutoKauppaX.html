@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AutokauppaX - lääkettä autokuumeisille</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h2>Autokauppa X - parhaat autot, parhaat hinnat</h2>
+        <input type="button" value="Hae tarjousautot" onclick="haeautot()" />
+        <div id="autot" />
+    </div>
+    <div>
+        <h2>Auton haku</h2>
+        <input type="text" id="autonId" size="5" />
+        <input type="button" value="Hae" onclick="haeauto();" />
+        <p id="auto" />
+    </div>
+    <!-- skriptit -->
+    <script src="http://ajax.aspnetcdn.com/ajax/JQuery/jquery-2.0.3.min.js" ></script>
+    <script>
+        function haeautot()
+        {
+            var uri = 'api/cars';
+            $.getJSON(uri, function (data) {
+                for (m in data) {
+                    document.getElementById("autot").innerHTML += data[m].Name + " " + data[m].Model + " Hinta: " + data[m].Price + "€<br />";
+                }
+            })
+        }
+
+        function muotoile(item) {
+            return item.Name + " " + item.Model + " Hinta: " + item.Price + " €";
+        }
+
+        function haeauto() {
+            var id = $('#autonId').val();
+            $.getJSON('api/cars/' + id).done(function (data) {
+                $('#auto').text(muotoile(data));
+            }).fail(function (jqXHR, textStauts, err) {
+            $('#auto').text('Virhe: ' + err)
+            })
+        }
+    </script>
+</body>
+</html>
